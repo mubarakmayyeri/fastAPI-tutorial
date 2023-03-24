@@ -10,6 +10,10 @@ class Todo(BaseModel):
 
 todos = []
 
+@app.get("/")
+async def home():
+  return {"Welcome to todo app"}
+
 @app.post("/todos/")
 async def create_todo(todo: Todo):
     todos.append(todo)
