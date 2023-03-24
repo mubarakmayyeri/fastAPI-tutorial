@@ -1,8 +1,20 @@
 from fastapi import FastAPI
+from pydantic import BaseModel
 
 app = FastAPI()
 
+class Todo(BaseModel):
+    title: str
+    description: str = None
+    completed: bool = False
 
-@app.get('/')
-async def root():
-  return {'message': 'Hello World'}
+todos = []
+
+@app.post("/todos/")
+async def create_todo(todo: Todo):
+    todos.append(todo)
+    return todo
+
+@app.get("/todos/")
+async def get_todos():
+    return todos
